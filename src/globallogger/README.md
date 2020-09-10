@@ -1,6 +1,6 @@
-# Using global loggers
+# Using Global Loggers
 
-zap also seems to offer global loggers - `zap.L()` for the mandatory structure logger, and `zap.S()`, for the _Sugared_ logger.
+zap offers global loggers - [`zap.L()`](https://pkg.go.dev/go.uber.org/zap?tab=doc#L) for the mandatory structure logger and [`zap.S()`](https://pkg.go.dev/go.uber.org/zap?tab=doc#S) for the Sugared Logger.
 
 From what I have seen, these loggers are not meant to be used out of the box (like `log.Print()` in the standard library), but rather their purpose seems only to provide a shared logger throughout the code. If you really want to use it, you need to [replace](https://godoc.org/go.uber.org/zap#ReplaceGlobals) the core with that of a different logger. You are also provided a way to _undo_ a replacement. Out of the box, the global loggers have no output.
 
