@@ -20,7 +20,7 @@ jobs:
         run: go vet ./...
       - name: Build and Execute
         run: |
-          for cmd in customencoder customlogger globallogger hierarchical sampler simple1
+          for cmd in customencoder customlogger globallogger hierarchical sampler presets
           do
             go run ./src/${cmd}/main.go
           done

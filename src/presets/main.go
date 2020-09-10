@@ -9,9 +9,7 @@ import (
 )
 
 func main() {
-	fmt.Print(`*** Using the Example logger
-
-`)
+	fmt.Print("*** Example Logger\n\n")
 
 	// Example Logger
 	logger := zap.NewExample()
@@ -28,7 +26,7 @@ func main() {
 	fmt.Println()
 
 	// Development Logger
-	fmt.Print("*** Using the Development logger\n\n")
+	fmt.Print("*** Development Logger\n\n")
 
 	logger, _ = zap.NewDevelopment()
 	logger.Debug("This is a DEBUG message")
@@ -44,7 +42,7 @@ func main() {
 	fmt.Println()
 
 	// Production Logger
-	fmt.Print("*** Using the Production logger\n\n")
+	fmt.Print("*** Production Logger\n\n")
 
 	logger, _ = zap.NewProduction()
 	logger.Debug("This is a DEBUG message")
@@ -60,7 +58,7 @@ func main() {
 	fmt.Println()
 
 	// Sugared Logger
-	fmt.Print("*** Using the Sugared logger\n\n")
+	fmt.Print("*** Sugared logger\n\n")
 
 	logger, _ = zap.NewDevelopment()
 	slogger := logger.Sugar()
@@ -68,9 +66,10 @@ func main() {
 	slogger.Infof("Infof() uses %s", "sprintf")
 	slogger.Infow("Infow() allows tags", "name", "Legolas", "type", 1)
 	slogger.Sync()
+	fmt.Println()
 
-	// JSON Built Logger
-	fmt.Println("*** Build a logger from a json ****")
+	// JSON Derived Logger
+	fmt.Print("*** JSON Derived Logger\n\n")
 
 	rawJSONConfig := []byte(`{
       "level": "info",
