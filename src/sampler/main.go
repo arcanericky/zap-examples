@@ -9,13 +9,17 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-type Logger struct {
+type logger struct {
 	*zap.Logger
 }
 
 func main() {
-	fmt.Printf("Log sampling to reduce the presure on I/O and CPU by reducing logging\n")
-	fmt.Printf("Using the built in sampler. You probably need to wrap the whole zapcore Sampler public methods if you need to write our own custom sampler\n")
+	fmt.Println("Log sampling to reduce the pressure on I/O and CPU by combining log entries.")
+	fmt.Print(`This example uses the built in sampler. You probably need to wrap the whole
+zapcore Sampler public methods if you need to write our own custom sampler.
+`)
+	fmt.Println()
+
 	encoderConfig := zap.NewProductionEncoderConfig()
 	atomLevel := zap.NewAtomicLevelAt(zapcore.InfoLevel)
 	encoder := zapcore.NewJSONEncoder(encoderConfig)
@@ -24,14 +28,18 @@ func main() {
 	core := zapcore.NewCore(encoder, writer, &atomLevel)
 	emitInitialMessages := 5
 	thereAfterEachMessages := 100
-	// You can embed zap.Logger inside your Logger struct for WithSamplingConfig and preserve zap.Logger interface
-	// Or if you take zap.Logger as one of the parameters for WithSamplingConfig, you don't need to use embedded struct.
-	logger := &Logger{zap.New(core)}
+	// You can embed zap.Logger inside your Logger struct for WithSamplingConfig
+	// and preserve zap.Logger interface or if you take zap.Logger as one of the
+	// parameters for WithSamplingConfig, you don't need to use embedded struct.
+	logger := &logger{zap.New(core)}
 
-	fmt.Printf("We will first emit the first %v messages then one every each %v messages thereafter \n", emitInitialMessages, thereAfterEachMessages)
-	logger = logger.WithSamplingConfig(time.Second, emitInitialMessages, thereAfterEachMessages)
+	fmt.Printf(`We will first emit the first %v messages then one every %v messages
+thereafter.
 
-	for i := 1; i < 110; i++ {
+`, emitInitialMessages, thereAfterEachMessages)
+	logger = logger.withSamplingConfig(time.Second, emitInitialMessages, thereAfterEachMessages)
+
+	for i := 1; i < thereAfterEachMessages+(emitInitialMessages*2); i++ {
 		logger.With(zap.Int("n", i)).Info("test at info")
 	}
 	logger.Sync()
@@ -44,7 +52,7 @@ func main() {
 	// {"level":"info","ts":1527544371.1518133,"msg":"test at info","n":105}
 }
 
-func (l *Logger) WithSamplingConfig(tick time.Duration, initial, thereAfter int) *Logger {
+func (l *logger) withSamplingConfig(tick time.Duration, initial, thereAfter int) *logger {
 	if initial < 1 || thereAfter < 1 {
 		// fmt.Printf("all arguments must be positive")
 		return l
@@ -55,5 +63,5 @@ func (l *Logger) WithSamplingConfig(tick time.Duration, initial, thereAfter int)
 			func(zapcore.Core) zapcore.Core {
 				return zapcore.NewSampler(core, tick, initial, thereAfter)
 			}))
-	return &Logger{newLogger}
+	return &logger{newLogger}
 }

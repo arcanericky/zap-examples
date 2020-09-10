@@ -16,3 +16,4 @@ $ go run src/customlogger/main.go
 * [Creating a custom logger](./src/customlogger)
 * [Using the global logger](./src/globallogger)
 * [Creating custom encoders for metadata fields](./src/customencoder)
+* [Using the Sampler](./src/sampler)
