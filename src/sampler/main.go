@@ -17,8 +17,8 @@ func main() {
 	fmt.Println("Log sampling to reduce the pressure on I/O and CPU by combining log entries.")
 	fmt.Print(`This example uses the built in sampler. You probably need to wrap the whole
 zapcore Sampler public methods if you need to write our own custom sampler.
+
 `)
-	fmt.Println()
 
 	encoderConfig := zap.NewProductionEncoderConfig()
 	atomLevel := zap.NewAtomicLevelAt(zapcore.InfoLevel)

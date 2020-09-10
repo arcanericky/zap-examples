@@ -18,6 +18,7 @@ type logger struct {
 func main() {
 	fmt.Print(`*** Create multiple hierarchy of loggers on raw logger ***
 You probably need to wrap SetLevel to deal with more level setting/resetting.
+
 `)
 
 	encoderConfig := zap.NewProductionEncoderConfig()
@@ -29,7 +30,10 @@ You probably need to wrap SetLevel to deal with more level setting/resetting.
 	coreLogger := zap.New(core)
 	parentLogger := logger{coreLogger, encoder, writer}
 	parentLogger.debug("Should not print")
-	fmt.Printf("parent child loggers are really copying parent logger then replace settings")
+	fmt.Print(`Parent/child loggers are really copying parent logger then replacing
+the settings
+
+`)
 	childLogger1 := parentLogger.clone()
 	childLogger1.debug("This child still inherits level from parent logger. Should not print")
 	childLogger2 := parentLogger.newLevel(zapcore.DebugLevel)

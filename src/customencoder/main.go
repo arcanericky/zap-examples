@@ -29,7 +29,7 @@ func main() {
 		},
 	}
 
-	fmt.Printf("\n*** Using standard ISO8601 time encoder\n\n")
+	fmt.Print("*** Using standard ISO8601 time encoder\n\n")
 
 	// avoiding copying of atomic values
 	cfg.Level = zap.NewAtomicLevelAt(zapcore.DebugLevel)
@@ -38,7 +38,7 @@ func main() {
 	logger.Info("This should have an ISO8601 based time stamp")
 	logger.Sync()
 
-	fmt.Printf("\n*** Using a custom time encoder\n\n")
+	fmt.Print("\n*** Using a custom time encoder\n\n")
 
 	cfg.EncoderConfig.EncodeTime = syslogTimeEncoder
 
@@ -46,7 +46,7 @@ func main() {
 	logger.Info("This should have a syslog style time stamp")
 	logger.Sync()
 
-	fmt.Printf("\n*** Using a custom level encoder\n\n")
+	fmt.Print("\n*** Using a custom level encoder\n\n")
 
 	cfg.EncoderConfig.EncodeLevel = customLevelEncoder
 

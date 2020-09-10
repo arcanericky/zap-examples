@@ -9,7 +9,9 @@ import (
 )
 
 func main() {
-	fmt.Printf("\n*** Using the Example logger\n\n")
+	fmt.Print(`*** Using the Example logger
+
+`)
 
 	// Example Logger
 	logger := zap.NewExample()
@@ -26,7 +28,7 @@ func main() {
 	fmt.Println()
 
 	// Development Logger
-	fmt.Printf("*** Using the Development logger\n\n")
+	fmt.Print("*** Using the Development logger\n\n")
 
 	logger, _ = zap.NewDevelopment()
 	logger.Debug("This is a DEBUG message")
@@ -42,7 +44,7 @@ func main() {
 	fmt.Println()
 
 	// Production Logger
-	fmt.Printf("*** Using the Production logger\n\n")
+	fmt.Print("*** Using the Production logger\n\n")
 
 	logger, _ = zap.NewProduction()
 	logger.Debug("This is a DEBUG message")
@@ -58,7 +60,7 @@ func main() {
 	fmt.Println()
 
 	// Sugared Logger
-	fmt.Printf("*** Using the Sugared logger\n\n")
+	fmt.Print("*** Using the Sugared logger\n\n")
 
 	logger, _ = zap.NewDevelopment()
 	slogger := logger.Sugar()
