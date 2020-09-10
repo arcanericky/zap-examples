@@ -10,9 +10,7 @@ The examples use `env.sh` and the old `GOPATH` method. Updated the repository to
 
 The zap package states:
 
-```
-By default, loggers are unbuffered. However, since zap's low-level APIs allow buffering, calling Sync before letting your process exit is a good habit.
-```
+> By default, loggers are unbuffered. However, since zap's low-level APIs allow buffering, calling Sync before letting your process exit is a good habit.
 
 I've sprinkled calls to the `Sync()` method at the end of the examples and before loggers are disposed of to show good practice and make all data is written.
 
