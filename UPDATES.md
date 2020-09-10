@@ -23,3 +23,7 @@ Some functions in the `customerencoder` example were exported. Removed this to c
 ## Document the use of the `ConsoleSeparator`
 
 The `customencoder` example's README contains information about a single call to `enc.AppendString()` because multiple calls cause spacing between the strings. Added an explanation of why this happens.
+
+## README Updates
+
+Many, many updates to all those useful READMEs.

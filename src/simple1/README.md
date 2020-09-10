@@ -80,8 +80,8 @@ The default logger expects structured tags.
 logger.Info("This is an INFO message with fields", zap.String("region", "us-west"), zap.Int("id", 2))
 ```
 
-This is the fastest option for an application where performance is key. However, for a just [a small additional penalty](https://github.com/uber-go/zap#performance), 
-which is still slightly better than the standard library, you can use 
+This is the fastest option for an application where performance is key. However, for a just [a small additional penalty](https://github.com/uber-go/zap#performance),
+which is still slightly better than the standard library, you can use
 the [Sugared Logger](https://pkg.go.dev/go.uber.org/zap?tab=doc#SugaredLogger) which uses a reflection based type detection to give you
 a simpler syntax for adding tags of mixed types.
 
@@ -100,5 +100,5 @@ Output:
 2018-05-02T18:13:22.376-0700    INFO    simple1/main.go:58      Infow() allows tags     {"name": "Legolas", "type": 1}
 ```
 
-You can switch from a sugared logger to a standard logger any time using the 
+You can switch from a sugared logger to a standard logger any time using the
 [`.Desugar()`](https://pkg.go.dev/go.uber.org/zap?tab=doc#SugaredLogger.Desugar) method on the logger.
