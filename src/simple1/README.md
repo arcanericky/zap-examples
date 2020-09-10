@@ -1,14 +1,14 @@
-# Using presets
+# Simple Logger Presets
 
-Zap recommends using presets for the simplest of cases. 
+## Using presets
 
-It makes three presets available:
+Zap recommends using presets for the simplest of cases and makes three presets available:
 
-- Example
-- Development
-- Production
+- [Example](https://pkg.go.dev/go.uber.org/zap?tab=doc#NewExample)
+- [Development](https://pkg.go.dev/go.uber.org/zap?tab=doc#NewDevelopment)
+- [Production](https://pkg.go.dev/go.uber.org/zap?tab=doc#NewProduction)
 
-I try out their presets in this piece of code. Here is the output.
+This is the output when these presets are implemented in code.
 
 ```console
 $ go run src/simple1/main.go
@@ -58,21 +58,21 @@ t/Users/snbhatta/.gradle/language/golang/1.9.2/go/src/runtime/proc.go:195"}
 # Observations
 
 - Both `Example` and `Production` loggers use the [JSON encoder](https://godoc.org/go.uber.org/zap/zapcore#NewJSONEncoder). `Development` uses the [Console](https://godoc.org/go.uber.org/zap/zapcore#NewConsoleEncoder) encoder.
-- The `logger.DPanic()` function causes a panic in `Development` logger but not in `Example` or `Production`.
+- The [`logger.DPanic()`](https://pkg.go.dev/go.uber.org/zap?tab=doc#Logger.DPanic) function causes a panic in the `Development` logger but not in the `Example` and `Production` loggers.
 - The `Development` logger:
-    * Adds a stack trace from Warn level and up. 
-    * Always prints the package/file/line number
-    * Tacks extra fields as a json string at the end of the line
-    * level names are uppercase
-    * timestamp is in ISO8601 with seconds
+    * Adds a stack trace from Warn level and up
+    * Prints the package/file/line number
+    * Appends extra fields as a json string
+    * Level names are uppercase
+    * Timestamp is in ISO8601 with seconds
 - The `Production` logger:
     * Doesn't log messages at debug level
-    * Adds stack trace as a json field for Error, DPanic levels, but not for Warn.
-    * Always adds the caller as a json field
-    * timestamp is in epoch format
-    * level is in lower case
+    * Adds stack trace as a json field for Error, DPanic levels, but not for Warn
+    * Adds the caller as a json field
+    * Timestamp is in epoch format
+    * Level names are lowercase
 
-# Using the "sugar" logger
+## The Sugared Logger
 
 The default logger expects structured tags.
 
@@ -80,12 +80,10 @@ The default logger expects structured tags.
 logger.Info("This is an INFO message with fields", zap.String("region", "us-west"), zap.Int("id", 2))
 ```
 
-This is the fastest option for an application where performance is key.
-
-However, for a just [a small additional penalty](https://github.com/uber-go/zap#performance), 
-which actually is still slightly better than the standard library, you can use 
-the _sugar_ logger, which uses a reflection based type detection to give you
-a simpler syntax to add tags of mixed types.
+This is the fastest option for an application where performance is key. However, for a just [a small additional penalty](https://github.com/uber-go/zap#performance), 
+which is still slightly better than the standard library, you can use 
+the [Sugared Logger](https://pkg.go.dev/go.uber.org/zap?tab=doc#SugaredLogger) which uses a reflection based type detection to give you
+a simpler syntax for adding tags of mixed types.
 
 ```go
 slogger := logger.Sugar()
@@ -102,5 +100,5 @@ Output:
 2018-05-02T18:13:22.376-0700    INFO    simple1/main.go:58      Infow() allows tags     {"name": "Legolas", "type": 1}
 ```
 
-You can switch from a sugar logger to a standard logger any time using the 
-`.Desugar()` method on the logger.
+You can switch from a sugared logger to a standard logger any time using the 
+[`.Desugar()`](https://pkg.go.dev/go.uber.org/zap?tab=doc#SugaredLogger.Desugar) method on the logger.

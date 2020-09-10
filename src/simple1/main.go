@@ -11,6 +11,7 @@ import (
 func main() {
 	fmt.Printf("\n*** Using the Example logger\n\n")
 
+	// Example Logger
 	logger := zap.NewExample()
 	logger.Debug("This is a DEBUG message")
 	logger.Info("This is an INFO message")
@@ -21,8 +22,10 @@ func main() {
 	logger.DPanic("This is a DPANIC message")
 	//logger.Panic("This is a PANIC message")   // would exit if uncommented
 
+	logger.Sync()
 	fmt.Println()
 
+	// Development Logger
 	fmt.Printf("*** Using the Development logger\n\n")
 
 	logger, _ = zap.NewDevelopment()
@@ -35,8 +38,10 @@ func main() {
 	// logger.DPanic("This is a DPANIC message") // would exit if uncommented
 	//logger.Panic("This is a PANIC message")    // would exit if uncommented
 
+	logger.Sync()
 	fmt.Println()
 
+	// Production Logger
 	fmt.Printf("*** Using the Production logger\n\n")
 
 	logger, _ = zap.NewProduction()
@@ -49,16 +54,20 @@ func main() {
 	logger.DPanic("This is a DPANIC message")
 	// logger.Panic("This is a PANIC message")   // would exit if uncommented
 
+	logger.Sync()
 	fmt.Println()
 
-	fmt.Printf("*** Using the Sugar logger\n\n")
+	// Sugared Logger
+	fmt.Printf("*** Using the Sugared logger\n\n")
 
 	logger, _ = zap.NewDevelopment()
 	slogger := logger.Sugar()
 	slogger.Info("Info() uses sprint")
 	slogger.Infof("Infof() uses %s", "sprintf")
 	slogger.Infow("Infow() allows tags", "name", "Legolas", "type", 1)
+	slogger.Sync()
 
+	// JSON Built Logger
 	fmt.Println("*** Build a logger from a json ****")
 
 	rawJSONConfig := []byte(`{
@@ -113,4 +122,5 @@ func main() {
 		zap.Duration("backoff", time.Second))
 	// {"level":"info","msg":"Failed to fetch URL.","url":"http://example.com","attempt":3,"backoff":"1"}
 
+	logger.Sync()
 }

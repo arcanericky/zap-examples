@@ -10,7 +10,6 @@ import (
 )
 
 func main() {
-
 	/*
 
 		// This would cause a panic: "panic: no encoder name specified"
@@ -48,6 +47,7 @@ func main() {
 	logger.Debug("This is a DEBUG message")
 	logger.Info("This is an INFO message")
 	logger.Info("This is an INFO message with fields", zap.String("region", "us-west"), zap.Int("id", 2))
+	logger.Sync()
 
 	fmt.Printf("\n*** Using a JSON encoder, at debug level, sending output to stdout, message key only specified\n\n")
 
@@ -63,6 +63,7 @@ func main() {
 	logger.Debug("This is a DEBUG message")
 	logger.Info("This is an INFO message")
 	logger.Info("This is an INFO message with fields", zap.String("region", "us-west"), zap.Int("id", 2))
+	logger.Sync()
 
 	fmt.Printf("\n*** Using a JSON encoder, at debug level, sending output to stdout, all possible keys specified\n\n")
 
@@ -97,4 +98,6 @@ func main() {
 			func(zapcore.Core) zapcore.Core {
 				return zapcore.NewCore(zapcore.NewConsoleEncoder(cfg.EncoderConfig), zapcore.AddSync(os.Stderr), zapcore.DebugLevel)
 			})).Info("This is an INFO message")
+
+	logger.Sync()
 }
